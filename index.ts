@@ -8,7 +8,11 @@ client.on("ready", () => {
     console.log("I am ready!");
 });
 
-client.on("message", (message) => { 
+client.on("message", (message) => {
+    if (message.author.id !== config.ownerID) {
+        message.channel.send("Hey Hayaan");
+        return;
+    }
     if (!message.content.startsWith(prefix) || message.author.bot) 
         { return; }
     if (message.content.startsWith(prefix + "ping")) {
