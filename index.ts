@@ -9,9 +9,8 @@ client.on("ready", () => {
 });
 
 client.on("message", (message) => {
-    if (message.author.id !== config.ownerID) {
-        message.channel.send("Hey Hayaan");
-        return;
+    if (message.author.id === config.ownerID) {
+        message.channel.send("Hello Hayaan");
     }
     if (!message.content.startsWith(prefix) || message.author.bot) 
         { return; }

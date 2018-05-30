@@ -6,9 +6,8 @@ client.on("ready", function () {
     console.log("I am ready!");
 });
 client.on("message", function (message) {
-    if (message.author.id !== config.ownerID) {
-        return;
-        message.channel.send("Hey Hayaan");
+    if (message.author.id === config.ownerID) {
+        message.channel.send("Hello Hayaan");
     }
     if (!message.content.startsWith(prefix) || message.author.bot) {
         return;
