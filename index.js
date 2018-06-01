@@ -17,6 +17,7 @@ client.on("message", function (message) {
     switch (currentCommand) {
       case "ping":
         message.channel.send(":up: | Pong!");
+        
         break;
       case "blah":
         message.channel.send("Meh.");
