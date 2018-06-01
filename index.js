@@ -3,6 +3,9 @@ const config = require("./config.json");
 const client = new Discord.Client();
 const prefix = config.prefix;
 
+// Functions to perform the commands
+const commands = require("./commands");
+
 client.on("ready", function () {
   console.log("I am ready!");
 });
@@ -10,8 +13,8 @@ client.on("ready", function () {
 client.on("message", function (message) {
   if (message.content.startsWith(prefix) && message.channel.id !== config.welcome_channelID) {
     const args = message.content.slice(prefix.length).trim().split(/ +/g);
-    const command = args.shift().toLowerCase();
-    switch (command) {
+    const currentCommand = args.shift().toLowerCase();
+    switch (currentCommand) {
       case "ping":
         message.channel.send(":up: | Pong!");
         break;
@@ -19,19 +22,19 @@ client.on("message", function (message) {
         message.channel.send("Meh.");
         break;
       case "greet":
-        if (args[0] !== undefined) {
-          message.channel.send(`Welcome ${args[0]}, courtesy of <@${message.author.id}>!`);
-        }
+        commands.greet(message, args);
         break;
       case "rep":
-        message.channel.send(`:up:  | **${message.author.username} has given ${args[0]} a reputation point!**`);
+        commands.rep(message, args);
         break;
       case "daily":
-        message.channel.send(`:atm:  | **${message.author.username} has given ${args[0]} :yen: 100 credits!**`);
+        commands.daily(message, args);
         break;
       case "repdaily":
-        message.channel.send(`:up:  | **${message.author.username} has given ${args[0]} a reputation point!**`);
-        message.channel.send(`:atm:  | **${message.author.username} has given ${args[0]} :yen: 100 credits!**`);
+        commands.repDaily(message, args);
+        break;
+      case "weather":
+        commands.weather(message, args);
         break;
       case "kick":
         const kickedUser = message.mentions.members.first();
