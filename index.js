@@ -1,45 +1,54 @@
-var Discord = require("discord.js");
-var config = require("./config.json");
-var client = new Discord.Client();
-var prefix = config.prefix;
+const Discord = require("discord.js");
+const config = require("./config.json");
+const client = new Discord.Client();
+const prefix = config.prefix;
 
 client.on("ready", function () {
     console.log("I am ready!");
 });
 
 client.on("message", function (message) {
-    // Check author of the message, return if it isn't the creator a.k.a. me
-    // if (message.author.id === config.ownerID) {
-    //     message.channel.send("Hello Hayaan");
-    // } else 
-    if (message.content.startsWith(prefix) || !message.author.bot) {
+    if (message.content.startsWith(prefix) && message.channel.id !== config.welcome_channelID) {
         const args = message.content.slice(prefix.length).trim().split(/ +/g);
         const command = args.shift().toLowerCase();
         switch (command) {
             case "ping":
-                message.channel.send("Pong!");
+                message.channel.send(":up: | Pong!");
                 break;
             case "blah":
                 message.channel.send("Meh.");
+                break;
+            case "greet":
+                if (args[0] !== undefined) {
+                    message.channel.send(
+                        `Welcome ${args[0]}, courtesy of <@${message.author.id}>!`);
+                }
+                break;
+            case "rep":
+                message.channel.send(`:up:  | **${message.author.username} has given ${args[0]} a reputation point!**`);
+                break;
+            case "daily":
+                message.channel.send(`:atm:  | **${message.author.username} has given ${args[0]} :yen: 100 credits!**`);
+                break;
+            case "repdaily":
+                message.channel.send(`:up:  | **${message.author.username} has given ${args[0]} a reputation point!**`);
+                message.channel.send(`:atm:  | **${message.author.username} has given ${args[0]} :yen: 100 credits!**`);
+                break;
+            case "kick":
+                const kickedUser = message.mentions.members.first();
+                kickedUser.kick();
+                break;
+            case "ban":
+                const bannedUser = message.mentions.members.first();
+                bannedUser.ban();
                 break;
             default:
                 message.channel.send("Invalid command, try again.");
                 break;
         }
-    } else {
-        return;
+    } else if (message.channel.id === config.welcome_channelID && !message.author.bot) {
+        message.channel.send(`Welcome sxb <@${message.author.id}>!`);
     }
-
-
-    // if (!message.content.startsWith(prefix) || message.author.bot) {
-    //     return;
-    // }
-    // if (message.content.startsWith(prefix + "ping")) {
-    //     message.channel.send("pong!");
-    // }
-    // else if (message.content.startsWith(prefix + "foo")) {
-    //     message.channel.send("bar!");
-    // }
 });
 
 client.login(config.artemis_token);
