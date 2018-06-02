@@ -6613,12 +6613,6 @@
             "website_slug": "accelerator-network"
         }, 
         {
-            "id": 2226, 
-            "name": "Triaconta", 
-            "symbol": "TRIA", 
-            "website_slug": "triaconta"
-        }, 
-        {
             "id": 2228, 
             "name": "PlexCoin", 
             "symbol": "PLX", 
@@ -9842,8 +9836,8 @@
         }
     ], 
     "metadata": {
-        "timestamp": 1527927377, 
-        "num_cryptocurrencies": 1640, 
+        "timestamp": 1527968668, 
+        "num_cryptocurrencies": 1639, 
         "error": null
     }
 }
