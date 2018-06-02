@@ -1,4 +1,7 @@
 const Discord = require("discord.js");
+const CoinMarketCap = require("node-coinmarketcap");
+
+const coinmarketcap = new CoinMarketCap();
 const client = new Discord.Client();
 
 module.exports = {
@@ -31,9 +34,10 @@ module.exports = {
     console.log(currentUser);
     console.log(typeof(currentUser));
     if (client.users.get(currentUser) === undefined) {
-      message.channel.send(client.users.get(args[0]).username);
+      message.channel.send("Defined.");
+      // message.channel.send(client.users.get(args[0]).username);
     } else {
-      message.channel.send("Undefined sxb.");
+      message.channel.send("Undefined.");
     }
   },
   repDaily: function (message, args) {
@@ -42,4 +46,28 @@ module.exports = {
   weather: function (message, args) {
     message.channel.send(`Weather in ${args}. Currently not implemented yet. Coming soon!`);
   },
+  coin: function (message, args) {
+    function setPrice(price) {
+      return price;
+    }
+    let symbol = args[0];
+    let currency = (args[1] === undefined) ? "USD" : args[1];
+    let colour = 0xF9CA33; // 0xFF0000 - RED, 0x008000 - GREEN
+    var price;  
+    coinmarketcap.get("bitcoin", (coin) => {
+      console.log(Number(coin.price_usd));
+      message.channel.send({embed: {
+        color: colour,
+        description: 
+        `${symbol} Price: ${coin.price_usd} ${currency}\nTesting now.`,
+      }});
+    });
+    console.log(price);
+    
+    // try {
+    //   message.channel.send("Found coin.\n");
+    // } catch (error) {
+    //   message.channel.send("Couldn't find that coin.");
+    // }
+  }
 }

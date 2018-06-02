@@ -37,6 +37,9 @@ client.on("message", function (message) {
       case "weather":
         commands.weather(message, args);
         break;
+      case "coin":
+        commands.coin(message, args);
+        break;
       case "kick":
         const kickedUser = message.mentions.members.first();
         kickedUser.kick();
