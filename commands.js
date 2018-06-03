@@ -58,7 +58,16 @@ module.exports = {
     coins.getCoinInformation(symbol);
     const coinInfo = JSON.parse(JSON.stringify(require("./crypto/currentcoin.json")));
     const coinUSD = coinInfo.quotes.USD;
-    const currentCoin = new Coin(coinInfo.name, coinInfo.symbol, coinUSD.price, [coinUSD.percent_change_1h, coinUSD.percent_change_24h, coinUSD.percent_change_7d]);
+    let currentCoin = new Coin(coinInfo.name, coinInfo.symbol, coinUSD.price, [coinUSD.percent_change_1h, coinUSD.percent_change_24h, coinUSD.percent_change_7d]);
     console.log(currentCoin);
+  },
+  avatar: (message, args) => { 
+    const image = (args[0] !== undefined) ? message.mentions.users.first().avatarURL : message.author.avatarURL;
+    const embed = new Discord.RichEmbed()
+      .setColor(0xFF8001)
+      .setImage(image)
+      .setFooter("x", "https://cdn.discordapp.com/avatars/451174485933031447/1cfb9e63d3293959ce59ab04c2367396.jpg?size=256");
+    message.channel.send(embed);
+    // message.channel.send(message.mentions.);
   }
 }

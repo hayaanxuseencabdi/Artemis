@@ -1,21 +1,21 @@
 {
-  "id": 1027,
-  "name": "Ethereum",
-  "symbol": "ETH",
-  "website_slug": "ethereum",
-  "rank": 2,
-  "circulating_supply": 99829708,
-  "total_supply": 99829708,
-  "max_supply": null,
+  "id": 52,
+  "name": "Ripple",
+  "symbol": "XRP",
+  "website_slug": "ripple",
+  "rank": 3,
+  "circulating_supply": 39241525848,
+  "total_supply": 99992075773,
+  "max_supply": 100000000000,
   "quotes": {
     "USD": {
-      "price": 592.08,
-      "volume_24h": 1899390000,
-      "market_cap": 59107173383,
-      "percent_change_1h": 0.1,
-      "percent_change_24h": 2.94,
-      "percent_change_7d": -0.44
+      "price": 0.641716,
+      "volume_24h": 323681000,
+      "market_cap": 25181915001,
+      "percent_change_1h": 0.07,
+      "percent_change_24h": 3.69,
+      "percent_change_7d": 4.42
     }
   },
-  "last_updated": 1527978262
+  "last_updated": 1527980642
 }

@@ -1,7 +1,8 @@
 const coins = JSON.parse(JSON.stringify(require("./coins.json"))).data;
-const request = require("request");
+// const request = require("request");
 const Coin = require("./coin.js");
-const fs = require("fs");
+// const fs = require("fs");
+const fetch = require("node-fetch");
 
 let coinMap = new Map();
 
@@ -14,22 +15,23 @@ Object.entries(coins).forEach(([id, coinInfo]) => {
 * current information using the CoinMarketCap API
 * @param symbol: Cryptocoin's symbol, all CAPS
 */
-exports.getCoinInformation = (inputSymbol) => {
-  // If the coin isn't in the top 100, return undefined and error handle in commands.js
-  if (!coinMap.get(inputSymbol)) { return undefined; }
-  let coinURL = `https://api.coinmarketcap.com/v2/ticker/${coinMap.get(inputSymbol)}`;
-  request({
-    url: coinURL,
-    json: true },
-    (error, response, body) => { 
-      if (!error && response.statusCode === 200) {
-        fs.writeFile("./crypto/currentcoin.json", JSON.stringify(body.data, null, 2), (err) => {
-          if (err) { return console.log(err); }
-          console.log("File with the coin's information has been succesfully saved.");
-         })
-      } else {
-        console.log(`Error code: ${response.statusCode} | Symbol ${inputSymbol}`);
-      }
-    }
-  );
-}
+// exports.getCoinInformation = (inputSymbol) => {
+//   // If the coin isn't in the top 100, return undefined and error handle in commands.js
+//   if (!coinMap.get(inputSymbol)) { return undefined; }
+//   let coinURL = `https://api.coinmarketcap.com/v2/ticker/${coinMap.get(inputSymbol)}`;
+//   fetch(coinURL)
+//     .then((data) => { 
+//       console.log(data);
+//      })
+//     .catch((error) => { 
+//       console.log(error);
+//     });
+// }
+let coinURL = `https://api.coinmarketcap.com/v2/ticker/${coinMap.get("ETH")}`;
+fetch(coinURL)
+.then((info) => { console.log(info.json()); })
+.catch((error) => {
+  console.log("gesgs");
+  console.log(error);
+});
+console.log(coinMap.get("ETH"));

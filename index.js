@@ -40,6 +40,9 @@ client.on("message", function (message) {
       case "coin":
         commands.coin(message, args);
         break;
+      case "avatar":
+        commands.avatar(message, args);
+        break;
       case "kick":
         const kickedUser = message.mentions.members.first();
         kickedUser.kick();
