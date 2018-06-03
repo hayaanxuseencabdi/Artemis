@@ -62,12 +62,15 @@ module.exports = {
     console.log(currentCoin);
   },
   avatar: (message, args) => { 
-    const image = (args[0] !== undefined) ? message.mentions.users.first().avatarURL : message.author.avatarURL;
-    const embed = new Discord.RichEmbed()
-      .setColor(0xFF8001)
-      .setImage(image)
-      .setFooter("x", "https://cdn.discordapp.com/avatars/451174485933031447/1cfb9e63d3293959ce59ab04c2367396.jpg?size=256");
-    message.channel.send(embed);
-    // message.channel.send(message.mentions.);
+    let image = [];
+    image = (args[0] !== undefined) ? message.mentions.users.array() : [message.author];
+    image.forEach((user) => { 
+      const embed = new Discord.RichEmbed()
+        .setColor(0xFF8001)
+        .setImage(user.avatarURL)
+        .setFooter(`Artemis™ | ${user.username}`, "https://cdn.discordapp.com/avatars/451174485933031447/1cfb9e63d3293959ce59ab04c2367396.jpg?size=256")
+        .setTimestamp();
+      message.channel.send(embed);
+     })
   }
 }
