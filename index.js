@@ -16,8 +16,7 @@ client.on("message", function (message) {
     const currentCommand = args.shift().toLowerCase();
     switch (currentCommand) {
       case "ping":
-        message.channel.send(":up: | Pong!");
-        
+        message.channel.send("Pong!");
         break;
       case "blah":
         message.channel.send("Meh.");

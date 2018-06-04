@@ -3,6 +3,15 @@ const request = require("request");
 const coins = require("./crypto/coins.js");
 const Coin = require("./crypto/coin.js");
 const fs = require("fs");
+const fetch = require("node-fetch");
+const coinsID = JSON.parse(JSON.stringify(require("./crypto/coins.json"))).data;
+
+const footerPicture = "https://cdn.discordapp.com/avatars/451174485933031447/1cfb9e63d3293959ce59ab04c2367396.jpg?size=256";
+const coinMap = new Map();
+
+Object.entries(coinsID).forEach(([id, coinInfo]) => {
+    coinMap.set(coinInfo.symbol, id);
+})
 
 const client = new Discord.Client();
 
@@ -49,17 +58,33 @@ module.exports = {
     message.channel.send(`Weather in ${args}. Currently not implemented yet. Coming soon!`);
   },
   coin: function (message, args) {
-    function setPrice(price) {
-      return price;
-    }
-    let symbol = args[0].toUpperCase();
+    const symbol = args[0].toUpperCase();
+    const coinid = coinMap.get(symbol);
     // let currency = (args[1] === undefined) ? "USD" : args[1];
-    const colour = 0xF9CA33; // 0xFF0000 - RED, 0x008000 - GREEN
-    coins.getCoinInformation(symbol);
-    const coinInfo = JSON.parse(JSON.stringify(require("./crypto/currentcoin.json")));
-    const coinUSD = coinInfo.quotes.USD;
-    let currentCoin = new Coin(coinInfo.name, coinInfo.symbol, coinUSD.price, [coinUSD.percent_change_1h, coinUSD.percent_change_24h, coinUSD.percent_change_7d]);
-    console.log(currentCoin);
+    let coinURL = `https://api.coinmarketcap.com/v2/ticker/${coinid}`;
+    fetch(coinURL)
+    .then((info) => info.json())
+    .then((data) => {
+      const coinInfo = data.data;
+      const coinPrices = coinInfo.quotes.USD;
+      const currentCoin = new Coin(coinInfo.name, coinInfo.symbol, coinInfo.rank, coinPrices.price, [coinPrices.percent_change_1h, coinPrices.percent_change_24h, coinPrices.percent_change_7d]);
+      const negPosColour = (coinPrices.percent_change_1h < 0) ? 0x008000 : 0xFF0000;
+      const embed = new Discord.RichEmbed()
+        // .setTitle(`**${currentCoin.name} (${currentCoin.symbol})**`)
+        // .setTitle(`[**${currentCoin.name} (${currentCoin.symbol})**](\`https://coinmarketcap.com/currencies/${currentCoin.name}/\`)`)
+        .setThumbnail(`https://s2.coinmarketcap.com/static/img/coins/32x32/${coinid}.png`)
+        .setColor(negPosColour)
+        // .setDescription(`$${currentCoin.currentPrice}\n`)
+        .setDescription(`**[${currentCoin.name} (${currentCoin.symbol})](\`https://coinmarketcap.com/currencies/${currentCoin.name}/\`)**`)
+        // .addField("name", "value")
+        .addField(`[${currentCoin.name}](https://coinmarketcap.com/currencies/${currentCoin.name})`)
+        .setFooter("̷̧̟̭̺͕̜̦̔̏̊̍ͧ͊́̚̕͞" , footerPicture)
+        .setTimestamp();
+      message.channel.send(embed);
+    })
+    .catch((error) => {
+      message.channel.send(`${symbol} not found.`);
+    });
   },
   avatar: (message, args) => { 
     let image = [];
@@ -67,8 +92,9 @@ module.exports = {
     image.forEach((user) => { 
       const embed = new Discord.RichEmbed()
         .setColor(0xFF8001)
+        .setDescription(`**[${user.tag}](${user.avatarURL})**`)
         .setImage(user.avatarURL)
-        .setFooter(`Artemis™ | ${user.username}`, "https://cdn.discordapp.com/avatars/451174485933031447/1cfb9e63d3293959ce59ab04c2367396.jpg?size=256")
+        .setFooter("̷̧̟̭̺͕̜̦̔̏̊̍ͧ͊́̚̕͞" , footerPicture)
         .setTimestamp();
       message.channel.send(embed);
      })

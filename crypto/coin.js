@@ -1,8 +1,9 @@
 class Coin {
-  constructor(name, symbol, currentPrice, percentualChanges) {
+  constructor(name, symbol, rank, currentPrice, percentualChanges) {
     this.name = name;
     this.symbol = symbol;
-    this.currentPrice = currentPrice;
+    this.rank = rank;
+    this.currentPrice = currentPrice.toFixed(2);
     this.percentualChanges = percentualChanges;
   }
 
