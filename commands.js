@@ -15,9 +15,16 @@ const footerPicture = "https://cdn.discordapp.com/avatars/451174485933031447/1cf
 const coinMap = new Map();
 const blank = "̷̧̟̭̺͕̜̦̔̏̊̍ͧ͊́̚̕͞";
 
-Object.entries(coinsID).forEach(([id, coinInfo]) => {
-    coinMap.set(coinInfo.symbol, id);
+// Object.entries(coinsID).forEach(([id, coinInfo]) => {
+//     coinMap.set(coinInfo.symbol, id);
+// })
+
+Object.entries(coinsID).forEach(([coinJSON]) => {
+  coinMap.set(coinJSON.symbol, coinJSON.id);
 })
+
+
+console.log(coinMap.size);
 
 const client = new Discord.Client();
 
@@ -66,27 +73,36 @@ module.exports = {
   coin: function (message, args) {
     const symbol = args[0].toUpperCase();
     const coinid = coinMap.get(symbol);
-    // let currency = (args[1] === undefined) ? "USD" : args[1];
     let coinURL = `https://api.coinmarketcap.com/v2/ticker/${coinid}`;
+
     fetch(coinURL)
     .then((info) => info.json())
-    .then((info) => {
-      const coinInfo = info.data;
+    .then((infoJSON) => {
+      const coinInfo = infoJSON.data;
       const coinPrices = coinInfo.quotes.USD;
+      const negPosColour = (coinPrices.percent_change_24h > 0) ? 0x008000 : 0xFF0000;
+
+
       const marketCap = helper.intersectCommas(coinPrices.market_cap.toString());
       const dailyVolume = helper.intersectCommas(coinPrices.volume_24h.toString());
       const supply = helper.intersectCommas(coinInfo.total_supply.toString());
-      const currentCoin = new Coin(coinInfo.name, coinInfo.symbol, coinInfo.rank, coinPrices.price, 
+
+      const currentCoin = new Coin(coinInfo.name, coinInfo.symbol, coinInfo.rank, coinPrices.price,
         [coinPrices.percent_change_1h, coinPrices.percent_change_24h, coinPrices.percent_change_7d],
         coinPrices.market_cap, coinPrices.volume_24h, coinInfo.total_supply);
-      const negPosColour = (coinPrices.percent_change_24h > 0) ? 0x008000 : 0xFF0000;
+      
       const embed = new Discord.RichEmbed()
-        .setThumbnail(`https://s2.coinmarketcap.com/static/img/coins/128x128/${coinid}.png`)
+        .setThumbnail(`https://s2.coinmarketcap.com/static/img/coins/64x64/${coinid}.png`)
         .setColor(negPosColour)
-        .setDescription(`**[${currentCoin.name} (${currentCoin.symbol})](https://coinmarketcap.com/currencies/${currentCoin.name})**`)
-        .addField(`${currentCoin.currentPrice} USD/${currentCoin.symbol}`, `**Rank**: ${currentCoin.rank}`)
-        .addField(blank, `**Delta 1h:**\t\t\t\t${currentCoin.percentualChanges[0]}%\n**Delta 24h:**\t\t\t${currentCoin.percentualChanges[1]}%\n**Delta 7 days:**\t\t${currentCoin.percentualChanges[2]}%`)
-        .addField(blank, `**Market cap:**\t\t $${marketCap}\n**24h volume:**\t\t$${dailyVolume}\n**Supply:**\t\t\t\t ${supply} ${currentCoin.symbol}`)
+        .setTitle(`${currentCoin.name} (${currentCoin.symbol})`)
+        .setURL(`https://coinmarketcap.com/currencies/${currentCoin.name}`)
+        .setDescription(`**${currentCoin.currentPrice} USD**\n\n` +
+          `**Rank**: ${currentCoin.rank}\n\n`+
+          `**Delta 1h:**\t\t\t\t${currentCoin.percentualChanges[0]}%\n`+
+          `**Delta 24h:**\t\t\t${currentCoin.percentualChanges[1]}%\n`+
+          `**Delta 7 days:**\t\t${currentCoin.percentualChanges[2]}%\n\n`+
+          `**Market cap:**\t\t $${marketCap}\n**24h volume:**\t\t$${dailyVolume}\n`+
+          `**Supply:**\t\t\t\t ${supply}`)
         .setFooter("CoinMarketCap API" , footerPicture)
         .setTimestamp();
       message.channel.send(embed);
