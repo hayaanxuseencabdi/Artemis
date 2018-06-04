@@ -22,7 +22,7 @@ coinsSymbolID.forEach((coinJSON) => {
 
 
 module.exports = {
-  greet: function (message) {
+  greet: (message) => {
     let mentionedUsers = message.mentions.users;
     if (mentionedUsers.size) {
       let greetString = "";
@@ -34,14 +34,14 @@ module.exports = {
       message.channel.send("Incorrect usage. No-one to greet was mentioned, try again.");
     }
   },
-  rep: function (message, args) {
+  rep: (message, args) => {
     if (args[0] !== undefined) {
       message.channel.send(`:up:  | **${message.author.username} has given ${args[0]} a reputation point!**`);
     } else {
       message.channel.send("Incorrect usage. No-one to rep was mentioned, try again.");
     }
   },
-  daily: function (message, args) {
+  daily: (message, args) => {
     let currentUser = args[0].substring(2, args[0].length  - 1);
     // if (args[0] !== undefined) {
     //   message.channel.send(`:atm:  | **${message.author.username} has given ${args[0]} :yen: 100 credits!**`);
@@ -57,14 +57,17 @@ module.exports = {
       message.channel.send("Undefined.");
     }
   },
-  repDaily: function (message, args) {
+  repDaily: (message, args) => {
     this.rep(message, args); this.daily(message, args);
   },
-  weather: function (message, args) {
+  weather: (message, args) => {
     message.channel.send(`Weather in ${args}. Currently not implemented yet. Coming soon!`);
   },
-  coin: function (message, args) {
-    crypto.sendEmbed(message, args, coinMap, footerPicture, Coin, helper, Discord, fetch);
+  coin: (message, args) => {
+    const allArgs = [args];
+    allArgs.forEach((arg) => {
+      crypto.sendEmbed(message, arg, coinMap, footerPicture, Coin, helper, Discord, fetch);
+    })
   },
   avatar: (message, args) => {
     let image = [];
