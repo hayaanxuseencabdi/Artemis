@@ -3,30 +3,23 @@ const Discord = require("discord.js");
 const request = require("request");
 const fs = require("fs");
 const fetch = require("node-fetch");
+const helper = require("./helperFunctions.js");
 
 const Coin = require("./crypto/coin.js");
-const helper = require("./helper.js");
+const crypto = require("./crypto/sendEmbed.js");
 
 
 
 // Constants
-const coinsID = JSON.parse(JSON.stringify(require("./crypto/coins.json"))).data;
+const coinsSymbolID = require("./crypto/allcoins.json").data;
 const footerPicture = "https://cdn.discordapp.com/avatars/451174485933031447/1cfb9e63d3293959ce59ab04c2367396.jpg?size=256";
 const coinMap = new Map();
-const blank = "̷̧̟̭̺͕̜̦̔̏̊̍ͧ͊́̚̕͞";
-
-// Object.entries(coinsID).forEach(([id, coinInfo]) => {
-//     coinMap.set(coinInfo.symbol, id);
-// })
-
-Object.entries(coinsID).forEach(([coinJSON]) => {
-  coinMap.set(coinJSON.symbol, coinJSON.id);
-})
-
-
-console.log(coinMap.size);
-
 const client = new Discord.Client();
+
+coinsSymbolID.forEach((coinJSON) => {
+  coinMap.set(coinJSON.symbol, coinJSON.id)
+});
+
 
 module.exports = {
   greet: function (message) {
@@ -71,46 +64,7 @@ module.exports = {
     message.channel.send(`Weather in ${args}. Currently not implemented yet. Coming soon!`);
   },
   coin: function (message, args) {
-    const symbol = args[0].toUpperCase();
-    const coinid = coinMap.get(symbol);
-    let coinURL = `https://api.coinmarketcap.com/v2/ticker/${coinid}`;
-
-    fetch(coinURL)
-    .then((info) => info.json())
-    .then((infoJSON) => {
-      const coinInfo = infoJSON.data;
-      const coinPrices = coinInfo.quotes.USD;
-      const negPosColour = (coinPrices.percent_change_24h > 0) ? 0x008000 : 0xFF0000;
-
-
-      const marketCap = helper.intersectCommas(coinPrices.market_cap.toString());
-      const dailyVolume = helper.intersectCommas(coinPrices.volume_24h.toString());
-      const supply = helper.intersectCommas(coinInfo.total_supply.toString());
-
-      const currentCoin = new Coin(coinInfo.name, coinInfo.symbol, coinInfo.rank, coinPrices.price,
-        [coinPrices.percent_change_1h, coinPrices.percent_change_24h, coinPrices.percent_change_7d],
-        coinPrices.market_cap, coinPrices.volume_24h, coinInfo.total_supply);
-      
-      const embed = new Discord.RichEmbed()
-        .setThumbnail(`https://s2.coinmarketcap.com/static/img/coins/64x64/${coinid}.png`)
-        .setColor(negPosColour)
-        .setTitle(`${currentCoin.name} (${currentCoin.symbol})`)
-        .setURL(`https://coinmarketcap.com/currencies/${currentCoin.name}`)
-        .setDescription(`**${currentCoin.currentPrice} USD**\n\n` +
-          `**Rank**: ${currentCoin.rank}\n\n`+
-          `**Delta 1h:**\t\t\t\t${currentCoin.percentualChanges[0]}%\n`+
-          `**Delta 24h:**\t\t\t${currentCoin.percentualChanges[1]}%\n`+
-          `**Delta 7 days:**\t\t${currentCoin.percentualChanges[2]}%\n\n`+
-          `**Market cap:**\t\t $${marketCap}\n**24h volume:**\t\t$${dailyVolume}\n`+
-          `**Supply:**\t\t\t\t ${supply}`)
-        .setFooter("CoinMarketCap API" , footerPicture)
-        .setTimestamp();
-      message.channel.send(embed);
-      // message.channel.send(JSON.stringify(coinInfo, null, 2));
-    })
-    .catch((error) => {
-      message.channel.send(`${error}\n${symbol} not found.`);
-    });
+    crypto.sendEmbed(message, args, coinMap, footerPicture, Coin, helper, Discord, fetch);
   },
   avatar: (message, args) => {
     let image = [];
@@ -120,7 +74,7 @@ module.exports = {
         .setColor(0xFF8001)
         .setDescription(`**[${user.tag}](${user.avatarURL})**`)
         .setImage(user.avatarURL)
-        .setFooter(blank , footerPicture)
+        .setFooter("̷̧̟̭̺͕̜̦̔̏̊̍ͧ͊́̚̕͞" , footerPicture)
         .setTimestamp();
       message.channel.send(embed);
      })
