@@ -4,7 +4,7 @@ const client = new Discord.Client();
 const prefix = config.prefix;
 
 // Functions to perform the commands
-const commands = require("./commands");
+const commands = require("./Commands");
 
 client.on("ready", function () {
   console.log("I am ready!");

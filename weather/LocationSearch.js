@@ -1,16 +1,19 @@
 const fetch = require("node-fetch");
-const helper = require("../helperFunctions.js");
+const helper = require("../HelperFunctions");
 const config = require("../config.json");
-const Location = require("./location.js");
+const Location = require("./Location");
 
 
 module.exports = {
   returnCoordinates: (message, query) => {
     const geocodingQuery = `https://maps.googleapis.com/maps/api/geocode/json?address=${helper.transformToQuery(query)}&key=${config.geocodingAPI}`;
-    fetch(geocodingQuery)
+    // message.channel.send(geocodingQuery);
+    return fetch(geocodingQuery)
     .then((info) => info.json()) 
     .then((infoJSON) => {
       if (infoJSON.status !== "OK") {
+        console.log("not OK");
+        message.channel.send(JSON.stringify(infoJSON), null, 2);
         message.channel.send(`${query} not found.`);
         return;
       }
@@ -18,10 +21,12 @@ module.exports = {
       const address = infoJSON.results[0].formatted_address;
       const symbol = (info[info.length - 1].types[0] === "postal_code") ? info[info.length - 2].short_name.toLowerCase() : info[info.length - 1].short_name.toLowerCase();
       const coordinates = [infoJSON.results[0].geometry.location.lng, infoJSON.results[0].geometry.location.lat];
-      const location = new Location(address, symbol, coordinates[0], coordinates[1]);
-      message.channel.send(location.toString());
+      return new Location(address, symbol, coordinates[0], coordinates[1]);
+      // console.log("location", location);
+      // message.channel.send(location.toString());
     })
     .catch((error) => {
+      // console.log("error", error);
       message.channel.send(error);
     });
   },

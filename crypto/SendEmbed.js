@@ -1,7 +1,7 @@
 const fetch = require("node-fetch");
 const Discord = require("discord.js");
-const helper = require("../helperFunctions.js");
-const Coin = require("./coin.js");
+const helper = require("../HelperFunctions.js");
+const Coin = require("./Coin.js");
 
 module.exports = {
   sendEmbed: (message, args, coinMap, footerPicture) => {
