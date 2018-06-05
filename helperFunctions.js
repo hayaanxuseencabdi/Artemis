@@ -1,3 +1,5 @@
+const fetch = require("node-fetch");
+
 module.exports = {
   intersectCommas: (sentence) => {
     if (sentence.length <= 3) { return sentence; }
@@ -8,5 +10,8 @@ module.exports = {
       returnString.unshift(sentence.slice(-3 + i * -3, i * -3));
     }
     return returnString.join().toString();
+  },
+  transformToQuery: (location) => {
+    return location.toString().replace(/\s+/g, '%20');
   }
 }

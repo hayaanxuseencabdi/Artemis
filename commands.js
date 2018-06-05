@@ -7,6 +7,7 @@ const helper = require("./helperFunctions.js");
 
 const Coin = require("./crypto/coin.js");
 const crypto = require("./crypto/sendEmbed.js");
+const location = require("./weather/locationSearch.js");
 
 
 
@@ -61,12 +62,13 @@ module.exports = {
     this.rep(message, args); this.daily(message, args);
   },
   weather: (message, args) => {
-    message.channel.send(`Weather in ${args}. Currently not implemented yet. Coming soon!`);
+    const allArgs = args.join(" ");
+    location.returnCoordinates(message, args);
   },
   coin: (message, args) => {
     const allArgs = [args];
     allArgs.forEach((arg) => {
-      crypto.sendEmbed(message, arg, coinMap, footerPicture, Coin, helper, Discord, fetch);
+      crypto.sendEmbed(message, arg, coinMap, footerPicture);
     })
   },
   avatar: (message, args) => {
