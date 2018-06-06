@@ -7,7 +7,7 @@ const prefix = config.prefix;
 const commands = require("./Commands");
 
 client.on("ready", function () {
-  console.log("I am ready!");
+  console.log("Online");
 });
 
 client.on("message", function (message) {

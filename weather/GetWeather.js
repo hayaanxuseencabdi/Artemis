@@ -1,14 +1,21 @@
 const fetch = require("node-fetch");
-const helper = require("../HelperFunctions");
-const config = require("../config.json");
 const Location = require("./Location");
 const location = require("./LocationSearch");
+const Discord = require("discord.js");
 
 module.exports = {
   getWeather: async (message, args) => {
     
-    var currentLocation = await location.returnCoordinates(message, args);
-    message.channel.send(currentLocation.toString());
+    let currentLocation = await location.returnCoordinates(message, args);
+
+
+    const embed = new Discord.RichEmbed()
+      .setTitle(currentLocation.toString())
+      .setColor(0xe07f00)
+      // .setTimestamp();
+    message.channel.send(embed);
+
+    // message.channel.send(currentLocation.toString());
 
 
     

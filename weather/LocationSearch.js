@@ -6,9 +6,7 @@ const Location = require("./Location");
 
 module.exports = {
   returnCoordinates: (message, query) => {
-    const geocodingQuery = `https://maps.googleapis.com/maps/api/geocode/json?address=${helper.transformToQuery(query)}&key=${config.geocodingAPI}`;
-    // message.channel.send(geocodingQuery);
-    return fetch(geocodingQuery)
+    return fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${helper.transformToQuery(query)}&key=${config.geocodingAPI}`)
     .then((info) => info.json()) 
     .then((infoJSON) => {
       if (infoJSON.status !== "OK") {
@@ -22,12 +20,9 @@ module.exports = {
       const symbol = (info[info.length - 1].types[0] === "postal_code") ? info[info.length - 2].short_name.toLowerCase() : info[info.length - 1].short_name.toLowerCase();
       const coordinates = [infoJSON.results[0].geometry.location.lng, infoJSON.results[0].geometry.location.lat];
       return new Location(address, symbol, coordinates[0], coordinates[1]);
-      // console.log("location", location);
-      // message.channel.send(location.toString());
     })
     .catch((error) => {
-      // console.log("error", error);
-      message.channel.send(error);
+      message.channel.send(`Couldn't find ${query}`, error);
     });
   },
 }

@@ -4,12 +4,11 @@ const helper = require("../HelperFunctions.js");
 const Coin = require("./Coin.js");
 
 module.exports = {
-  sendEmbed: (message, args, coinMap, footerPicture) => {
-    const symbol = args[0].toUpperCase();
+  sendEmbed: (message, arg, coinMap, footerPicture) => {
+    const symbol = arg.toUpperCase();
     const coinid = coinMap.get(symbol);
-    let coinURL = `https://api.coinmarketcap.com/v2/ticker/${coinid}`;
 
-    fetch(coinURL)
+    return fetch(`https://api.coinmarketcap.com/v2/ticker/${coinid}`)
     .then((info) => info.json())
     .then((infoJSON) => {
       const coinInfo = infoJSON.data;
@@ -38,7 +37,8 @@ module.exports = {
           `**Supply:** ${supply} ${symbol}`)
         .setFooter("CoinMarketCap API" , footerPicture)
         .setTimestamp();
-      message.channel.send(embed);
+      // message.channel.send(embed);
+      return embed;
     })
     .catch((error) => {
       message.channel.send(`${error}\n${symbol} not found.`);

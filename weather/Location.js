@@ -8,8 +8,7 @@ class Location {
   }
 
   toString() {
-    return `**${this.formattedAddress}** |  :flag_${this.countryAbbreviation}:\n` +
-      `Longitude: ${this.longitude} | Latitude: ${this.latitude}`;
+    return `**${this.formattedAddress}** :flag_${this.countryAbbreviation}:\n`;
   }
 }
 

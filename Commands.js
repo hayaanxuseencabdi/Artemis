@@ -1,14 +1,16 @@
-// Requirements
+// Node modules
 const Discord = require("discord.js");
 const request = require("request");
 const fs = require("fs");
 const fetch = require("node-fetch");
 const helper = require("./HelperFunctions");
 
+// Personal modules
 const Coin = require("./crypto/Coin");
-const crypto = require("./crypto/SendEmbed");
-const weather = require("./weather/RetrieveWeather");
+const cryptoEmbed = require("./crypto/SendEmbed");
+const weather = require("./weather/GetWeather");
 const location = require("./weather/LocationSearch");
+const weatherEmbed = require("./weather/SendEmbed");
 
 
 
@@ -41,26 +43,19 @@ module.exports = {
     weather.getWeather(message, args);
   },
   coin: (message, args) => {
-    const allArgs = [args];
-    allArgs.forEach((arg) => {
-      crypto.sendEmbed(message, arg, coinMap, footerPicture);
-    })
+    if (args.length > 3) {
+      message.channel.send("Too many queries, limit of 3.");
+    } else if (!args.length) {
+      message.channel.send("No queries given.");
+    } else {
+      args.forEach(async (arg) => {
+        const currentEmbed = await cryptoEmbed.sendEmbed(message, arg, coinMap, footerPicture);
+        message.channel.send(currentEmbed);
+      })
+    }
   },
   avatar: (message, args) => {
     const embed = helper.createAvatarEmbed(message, args, footerPicture);
     message.channel.send(embed);
-
-
-    // let image = [];
-    // image = (args[0] !== undefined) ? message.mentions.users.array() : [message.author];
-    // image.forEach((user) => { 
-    //   const embed = new Discord.RichEmbed()
-    //     .setColor(0xFF8001)
-    //     .setDescription(`**[${user.tag}](${user.avatarURL})**`)
-    //     .setImage(user.avatarURL)
-    //     .setFooter("̷̧̟̭̺͕̜̦̔̏̊̍ͧ͊́̚̕͞" , footerPicture)
-    //     .setTimestamp();
-    // message.channel.send(embed);
-    // })
   }
 }
