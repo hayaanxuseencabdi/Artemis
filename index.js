@@ -59,4 +59,4 @@ client.on("message", function (message) {
   }
 });
 
-client.login(config.artemis_token);
+client.login(process.env.ARTEMIS);

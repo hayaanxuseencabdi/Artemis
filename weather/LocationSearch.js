@@ -1,12 +1,11 @@
 const fetch = require("node-fetch");
 const helper = require("../HelperFunctions");
-const config = require("../config.json");
 const Location = require("./Location");
 
 
 module.exports = {
   returnCoordinates: (message, query) => {
-    return fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${helper.transformToQuery(query)}&key=${config.geocodingAPI}`)
+    return fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${helper.transformToQuery(query)}&key=${process.env.GEOCODING}`)
     .then((info) => info.json()) 
     .then((infoJSON) => {
       if (infoJSON.status !== "OK") {

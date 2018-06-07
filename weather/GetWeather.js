@@ -1,19 +1,19 @@
 const fetch = require("node-fetch");
-const Location = require("./Location");
 const location = require("./LocationSearch");
-const Discord = require("discord.js");
 const weatherEmbed = require("./SendEmbed");
 const Weather = require("./Weather");
-const config = require("../config.json");
 
 module.exports = {
   getWeather: async (message, args) => {
-    
+    console.log(process.env.OPENWEATHERMAP);
+    console.log(process.env.GEOCODING);
+    console.log(process.env.ARTEMIS);
+
     let currentLocation = await location.returnCoordinates(message, args);
     message.channel.send(`Lat: ${currentLocation.latitude}; Long: ${currentLocation.longitude}`);
     console.log(currentLocation.latitude, currentLocation.longitude);
     // Temp returned is in Kelvin
-    fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${currentLocation.latitude}&lon=${currentLocation.longitude}&appid=${config.openweathermapAPI}`)
+    fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${currentLocation.latitude}&lon=${currentLocation.longitude}&appid=${process.env.OPENWEATHERMAP}`)
     .then((unparsedJSON) => unparsedJSON.json())
     .then((info) => {
       message.channel.send(`${info.main.temp}; ${info.main.humidity}; ${info.wind.speed}; ${info.clouds.all}`);
