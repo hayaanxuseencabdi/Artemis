@@ -15,7 +15,12 @@ module.exports = {
       const coinPrices = coinInfo.quotes.USD;
       const negPosColour = (coinPrices.percent_change_24h > 0) ? 0x008000 : 0xFF0000;
 
-
+      //TODO: corner case check for null values
+      // let marketCap = 0;
+      // message.channel.send("test");
+      // if (coinPrices.market_cap !== null) {
+      //   marketCap = helper.intersectCommas(coinPrices.market_cap.toString());
+      // }
       const marketCap = helper.intersectCommas(coinPrices.market_cap.toString());
       const dailyVolume = helper.intersectCommas(coinPrices.volume_24h.toString());
       const supply = helper.intersectCommas(coinInfo.circulating_supply.toString());
@@ -37,7 +42,6 @@ module.exports = {
           `**Supply:** ${supply} ${symbol}`)
         .setFooter("CoinMarketCap API" , footerPicture)
         .setTimestamp();
-      // message.channel.send(embed);
       return embed;
     })
     .catch((error) => {

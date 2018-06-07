@@ -8,11 +8,9 @@ const helper = require("./HelperFunctions");
 // Personal modules
 const Coin = require("./crypto/Coin");
 const cryptoEmbed = require("./crypto/SendEmbed");
-const weather = require("./weather/GetWeather");
+const getWeather = require("./weather/GetWeather");
 const location = require("./weather/LocationSearch");
 const weatherEmbed = require("./weather/SendEmbed");
-
-
 
 // Constants
 const coinsSymbolID = require("./crypto/AllCoins.json").data;
@@ -38,9 +36,8 @@ module.exports = {
     }
   },
   weather: (message, args) => {
-    const allArgs = args.join(" ");
-    // location.returnCoordinates(message, args);
-    weather.getWeather(message, args);
+    console.log([args.join(" ")]);
+    getWeather.getWeather(message, args.join(" "));
   },
   coin: (message, args) => {
     if (args.length > 3) {
@@ -55,6 +52,7 @@ module.exports = {
     }
   },
   avatar: (message, args) => {
+    console.log(args);
     const embed = helper.createAvatarEmbed(message, args, footerPicture);
     message.channel.send(embed);
   }

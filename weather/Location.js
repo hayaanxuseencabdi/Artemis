@@ -3,8 +3,8 @@ class Location {
               longitude = "", latitude = "") {
     this.formattedAddress = formattedAddress;
     this.countryAbbreviation = countryAbbreviation.toLowerCase();
-    this.longitude = Number.parseFloat(longitude);
-    this.latitude = Number.parseFloat(latitude);
+    this.longitude = Number.parseFloat(longitude).toFixed(2);
+    this.latitude = Number.parseFloat(latitude).toFixed(2);
   }
 
   toString() {
