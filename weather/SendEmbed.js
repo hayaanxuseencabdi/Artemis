@@ -1,5 +1,4 @@
 const Discord = require("discord.js");
-const Location = require("./Location");
 
 
 module.exports = {

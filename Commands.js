@@ -1,22 +1,14 @@
 // Node modules
-const Discord = require("discord.js");
-const request = require("request");
-const fs = require("fs");
-const fetch = require("node-fetch");
 const helper = require("./HelperFunctions");
 
 // Personal modules
-const Coin = require("./crypto/Coin");
 const cryptoEmbed = require("./crypto/SendEmbed");
 const getWeather = require("./weather/GetWeather");
-const location = require("./weather/LocationSearch");
-const weatherEmbed = require("./weather/SendEmbed");
 
 // Constants
 const coinsSymbolID = require("./crypto/AllCoins.json").data;
 const footerPicture = "https://cdn.discordapp.com/avatars/451174485933031447/1cfb9e63d3293959ce59ab04c2367396.jpg?size=256";
 const coinMap = new Map();
-const client = new Discord.Client();
 
 coinsSymbolID.forEach((coinJSON) => {
   coinMap.set(coinJSON.symbol, coinJSON.id)

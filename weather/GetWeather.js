@@ -1,14 +1,9 @@
 const fetch = require("node-fetch");
 const location = require("./LocationSearch");
-const weatherEmbed = require("./SendEmbed");
 const Weather = require("./Weather");
 
 module.exports = {
   getWeather: async (message, args) => {
-    console.log(process.env.OPENWEATHERMAP);
-    console.log(process.env.GEOCODING);
-    console.log(process.env.ARTEMIS);
-
     let currentLocation = await location.returnCoordinates(message, args);
     message.channel.send(`Lat: ${currentLocation.latitude}; Long: ${currentLocation.longitude}`);
     console.log(currentLocation.latitude, currentLocation.longitude);
