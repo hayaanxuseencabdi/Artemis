@@ -14,7 +14,6 @@ module.exports = {
       const coinInfo = infoJSON.data;
       const coinPrices = coinInfo.quotes.USD;
       const negPosColour = (coinPrices.percent_change_24h > 0) ? 0x008000 : 0xFF0000;
-
       //TODO: corner case check for null values
       // let marketCap = 0;
       // message.channel.send("test");
@@ -40,12 +39,13 @@ module.exports = {
           `**Delta 7 days:** ${currentCoin.percentualChanges[2]}%\n\n`+
           `**Market cap:** $${marketCap}\n**24h volume:** $${dailyVolume}\n`+
           `**Supply:** ${supply} ${symbol}`)
-        .setFooter("CoinMarketCap API" , footerPicture)
+        .setFooter("CoinMarketCap" , footerPicture)
         .setTimestamp();
       return embed;
     })
     .catch((error) => {
-      message.channel.send(`${error}\n${symbol} not found.`);
+      console.error(error);
+      message.channel.send(`${symbol} not found.`);
     });
   }
 }

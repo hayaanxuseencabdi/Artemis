@@ -6,7 +6,6 @@ const cryptoEmbed = require("./crypto/CryptoEmbed");
 const getWeather = require("./weather/GetWeather");
 
 // Constants
-const config = require("./config.json")
 const coinsSymbolID = require("./crypto/AllCoins.json").data;
 const footerPicture = "https://cdn.discordapp.com/avatars/451174485933031447/1cfb9e63d3293959ce59ab04c2367396.jpg?size=256";
 const coinMap = new Map();
@@ -28,10 +27,8 @@ module.exports = {
       message.channel.send("Incorrect usage. No-one to greet was mentioned, try again.");
     }
   },
-  weather: async (message, args, footerPicture) => {
-    console.log([args.join(" ")]);
-    const currentEmbed = await getWeather.getWeather(message, args.join(" "), footerPicture);
-    message.channel.send(currentEmbed);
+  weather: async (message, args) => {
+    getWeather.getWeather(message, args.join(" "), footerPicture);
   },
   coin: (message, args) => {
     if (args.length > 3) {

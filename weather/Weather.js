@@ -1,14 +1,14 @@
 class Weather {
-  constructor(formattedAddress, temperature, humidity, windSpeed, cloudiness, iconURL) {
+  constructor(formattedAddress, weatherConditions, temperature, humidity, windSpeed, cloudiness, iconCode) {
     this.formattedAddress = formattedAddress;
-    this.temperature = temperature;
+    this.weatherConditions = weatherConditions;
     this.celsius = (temperature - 273.15).toFixed(0);
     this.fahrenheit = (1.8 * (temperature - 273.15) + 32).toFixed(0);
     this.humidity = humidity;
     this.windSpeedMetres = windSpeed;
     this.windSpeedMiles = (windSpeed * 2.23694).toFixed(1);
     this.cloudiness = cloudiness;
-    this.iconURL = iconURL;
+    this.iconURL = `https://openweathermap.org/img/w/${iconCode}.png`;
   }
 
   toString() {

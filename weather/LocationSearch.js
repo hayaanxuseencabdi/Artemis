@@ -9,9 +9,14 @@ module.exports = {
     .then((info) => info.json()) 
     .then((infoJSON) => {
       if (infoJSON.status !== "OK") {
-        console.log("not OK");
-        message.channel.send(JSON.stringify(infoJSON), null, 2);
-        message.channel.send(`${query} not found.`);
+        message.reply("refrain from using any special characters.")
+        .then((msg) => {
+          message.delete();
+          msg.delete(3000);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
         return;
       }
       const info = infoJSON.results[0].address_components;
@@ -21,7 +26,7 @@ module.exports = {
       return new Location(address, symbol, coordinates[0], coordinates[1]);
     })
     .catch((error) => {
-      message.channel.send(`Couldn't find ${query}`, error);
+      console.log(`Couldn't find ${query}`, error);
     });
   },
 }
