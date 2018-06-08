@@ -18,21 +18,6 @@ client.on("message", function (message) {
       case "ping":
         message.channel.send("Pong!");
         break;
-      case "blah":
-        message.channel.send("Meh.");
-        break;
-      case "greet":
-        commands.greet(message, args);
-        break;
-      case "rep":
-        commands.rep(message, args);
-        break;
-      case "daily":
-        commands.daily(message, args);
-        break;
-      case "repdaily":
-        commands.repDaily(message, args);
-        break;
       case "weather":
         commands.weather(message, args);
         break;

@@ -1,25 +1,15 @@
-// const Discord = require("discord.js");
-// const Weather = require("./Weather");
+const Discord = require("discord.js");
 
-
-// module.exports = {
-//   sendEmbed: (currentLocation, currentWeather, footerPicture) => {
-//     return new Promise((resolve) => {
-//       const dayNight = ;
-//       const embed = 
-//         console.log("WEATHER EMBED");
-//         resolve(embed);
-//     });
-//   }
-// }
-
-  //   const dayNight = (weather.icon[3] == 'd') ? 0xF4E542 : 0x000000;
-  //   const embed = new Discord.RichEmbed()
-  //     .setTitle(currentLocation.toString())
-  //     .setColor(dayNight)
-  //     // .setDescription()
-  //     .setThumbnail(currentWeather.iconURL)
-  //     .setFooter("̷̧̟̭̺͕̜̦̔̏̊̍ͧ͊́̚̕͞", footerPicture);
-  //     console.log("WEATHER EMBED");
-  //     return embed;
-  // }
+module.exports = {
+  sendEmbed: (currentLocation, currentWeather, dayNightChar) => {
+    const weatherEmbed = new Discord.RichEmbed()
+      .setDescription(currentLocation.toString())
+      .setColor((dayNightChar == 'd') ? 0xF4E542 : 0x000000)
+      .setThumbnail(currentWeather.iconURL)
+      .setURL(currentWeather.weatherURL)
+      .addField(`${currentWeather.celsius} °C | ${currentWeather.fahrenheit} °F`, `**Weather:** ${currentWeather.weatherConditions}\n` + 
+        `**Humidity:** ${currentWeather.humidity}%\n**Cloudiness:** ${currentWeather.cloudiness}%\n` +
+        `**Wind speed:** ${currentWeather.windSpeedMetres} m/s | ${currentWeather.windSpeedMiles}mph`);
+    return weatherEmbed;
+  }
+}

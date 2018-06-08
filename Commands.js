@@ -15,20 +15,9 @@ coinsSymbolID.forEach((coinJSON) => {
 });
 
 module.exports = {
-  greet: (message) => {
-    let mentionedUsers = message.mentions.users;
-    if (mentionedUsers.size) {
-      let greetString = "";
-      mentionedUsers.array().forEach(user => {
-        greetString += `${user}, `;
-      });
-      message.channel.send(`Welcome ${greetString}courtesy of <@${message.author.id}>.`);
-    } else {
-      message.channel.send("Incorrect usage. No-one to greet was mentioned, try again.");
-    }
-  },
   weather: async (message, args) => {
-    getWeather.getWeather(message, args.join(" "), footerPicture);
+    const embed = await getWeather.getWeather(message, args.join(" "));
+    message.channel.send(embed);
   },
   coin: (message, args) => {
     if (args.length > 3) {

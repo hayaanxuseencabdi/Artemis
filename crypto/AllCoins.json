@@ -1339,12 +1339,6 @@
             "website_slug": "bitbay"
         }, 
         {
-            "id": 729, 
-            "name": "Blitzcash", 
-            "symbol": "BLITZ", 
-            "website_slug": "blitzcash"
-        }, 
-        {
             "id": 730, 
             "name": "GCN Coin", 
             "symbol": "GCN", 
@@ -2749,12 +2743,6 @@
             "website_slug": "bittokens"
         }, 
         {
-            "id": 1360, 
-            "name": "TechShares", 
-            "symbol": "THS", 
-            "website_slug": "techshares"
-        }, 
-        {
             "id": 1361, 
             "name": "Artex Coin", 
             "symbol": "ATX", 
@@ -2933,12 +2921,6 @@
             "name": "SingularDTV", 
             "symbol": "SNGLS", 
             "website_slug": "singulardtv"
-        }, 
-        {
-            "id": 1411, 
-            "name": "CaliphCoin", 
-            "symbol": "CALC", 
-            "website_slug": "caliphcoin"
         }, 
         {
             "id": 1414, 
@@ -6289,12 +6271,6 @@
             "website_slug": "zephyr"
         }, 
         {
-            "id": 2164, 
-            "name": "DCORP", 
-            "symbol": "DRP", 
-            "website_slug": "dcorp"
-        }, 
-        {
             "id": 2165, 
             "name": "ERC20", 
             "symbol": "ERC20", 
@@ -8186,7 +8162,7 @@
         }, 
         {
             "id": 2508, 
-            "name": "DRP Utility", 
+            "name": "DCORP Utility", 
             "symbol": "DRPU", 
             "website_slug": "drp-utility"
         }, 
@@ -9691,6 +9667,12 @@
             "website_slug": "xyo-network"
         }, 
         {
+            "id": 2766, 
+            "name": "Cryptaur", 
+            "symbol": "CPT", 
+            "website_slug": "cryptaur"
+        }, 
+        {
             "id": 2767, 
             "name": "APIS", 
             "symbol": "APIS", 
@@ -9833,11 +9815,119 @@
             "name": "Endor Protocol", 
             "symbol": "EDR", 
             "website_slug": "endor-protocol"
+        }, 
+        {
+            "id": 2836, 
+            "name": "Bigbom", 
+            "symbol": "BBO", 
+            "website_slug": "bigbom"
+        }, 
+        {
+            "id": 2837, 
+            "name": "0xBitcoin", 
+            "symbol": "0xBTC", 
+            "website_slug": "0xbtc"
+        }, 
+        {
+            "id": 2838, 
+            "name": "PCHAIN", 
+            "symbol": "PAI", 
+            "website_slug": "pchain"
+        }, 
+        {
+            "id": 2839, 
+            "name": "Shopin", 
+            "symbol": "SHOP", 
+            "website_slug": "shopin"
+        }, 
+        {
+            "id": 2840, 
+            "name": "QuarkChain", 
+            "symbol": "QKC", 
+            "website_slug": "quarkchain"
+        }, 
+        {
+            "id": 2841, 
+            "name": "LoyalCoin", 
+            "symbol": "LYL", 
+            "website_slug": "loyalcoin"
+        }, 
+        {
+            "id": 2842, 
+            "name": "Bankera", 
+            "symbol": "BNK", 
+            "website_slug": "bankera"
+        }, 
+        {
+            "id": 2843, 
+            "name": "Ether Zero", 
+            "symbol": "ETZ", 
+            "website_slug": "ether-zero"
+        }, 
+        {
+            "id": 2844, 
+            "name": "Shivom", 
+            "symbol": "OMX", 
+            "website_slug": "shivom"
+        }, 
+        {
+            "id": 2845, 
+            "name": "MEDX", 
+            "symbol": "MEDX", 
+            "website_slug": "medx"
+        }, 
+        {
+            "id": 2846, 
+            "name": "FuturoCoin", 
+            "symbol": "FTO", 
+            "website_slug": "futurocoin"
+        }, 
+        {
+            "id": 2847, 
+            "name": "The Abyss", 
+            "symbol": "ABYSS", 
+            "website_slug": "the-abyss"
+        }, 
+        {
+            "id": 2848, 
+            "name": "Paymon", 
+            "symbol": "PMNT", 
+            "website_slug": "paymon"
+        }, 
+        {
+            "id": 2849, 
+            "name": "Hurify", 
+            "symbol": "HUR", 
+            "website_slug": "hurify"
+        }, 
+        {
+            "id": 2850, 
+            "name": "TRAXIA", 
+            "symbol": "TMT", 
+            "website_slug": "traxia"
+        }, 
+        {
+            "id": 2851, 
+            "name": "CGC Token", 
+            "symbol": "CGC", 
+            "website_slug": "cgc-token"
+        }, 
+        {
+            "id": 2852, 
+            "name": "Engine", 
+            "symbol": "EGCC", 
+            "website_slug": "engine"
+        }, 
+        {
+            "id": 2853, 
+            "name": "MIRQ", 
+            "symbol": "MRQ", 
+            "website_slug": "mirq"
         }
     ], 
     "metadata": {
-        "timestamp": 1528105184, 
-        "num_cryptocurrencies": 1639, 
+        "timestamp": 1528495046, 
+        "num_cryptocurrencies": 1654, 
         "error": null
     }
 }
