@@ -3,7 +3,7 @@ const config = require("./config.json");
 const client = new Discord.Client();
 const prefix = config.prefix;
 
-// Functions to perform the commands
+// Functions to perform certain commands
 const commands = require("./Commands");
 
 client.on("ready", function () {
@@ -43,12 +43,19 @@ client.on("message", function (message) {
         commands.avatar(message, args);
         break;
       case "kick":
-        const kickedUser = message.mentions.members.first();
-        kickedUser.kick();
+        message.mentions.members.first().kick();
         break;
       case "ban":
-        const bannedUser = message.mentions.members.first();
-        bannedUser.ban();
+        message.mentions.members.first().ban();
+        break;
+      case "silence":
+        commands.silence(message);
+        break;
+      case "mute":
+        commands.mute(message);
+        break;
+      case "deafen":
+        commands.deafen(message);
         break;
       default:
         message.channel.send("Invalid command, try again.");

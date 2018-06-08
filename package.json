@@ -15,6 +15,7 @@
     "dotenv": "^5.0.1",
     "ffmpeg-binaries": "^3.2.2-3",
     "node-fetch": "^2.1.2",
+    "node-opus": "^0.3.0",
     "request": "^2.87.0"
   }
 }

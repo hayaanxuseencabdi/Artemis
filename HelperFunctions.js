@@ -1,5 +1,5 @@
-const fetch = require("node-fetch");
 const Discord = require("discord.js");
+const config = require("./config.json");
 
 module.exports = {
   intersectCommas: (sentence) => {
@@ -15,17 +15,24 @@ module.exports = {
   transformToQuery: (location) => {
     return location.toString().replace(/\s+/g, '%20');
   },
-  createAvatarEmbed:(message, args, footerPicture) => {
-    let image = [];
-    image = (args[0] !== undefined) ? message.mentions.users.array() : [message.author];
-    image.forEach((user) => { 
-      const embed = new Discord.RichEmbed()
-        .setColor(0xFF8001)
-        .setDescription(`**[${user.tag}](${user.avatarURL})**`)
-        .setImage(user.avatarURL)
-        .setFooter("̷̧̟̭̺͕̜̦̔̏̊̍ͧ͊́̚̕͞" , footerPicture)
-        .setTimestamp();
-      return embed;
-     })
+  createAvatarEmbed: (message, args, footerPicture) => {
+    return new Promise((resolve, reject) => {
+      let image = [];
+      let embeds = [];
+      image = (args[0] !== undefined) ? message.mentions.users.array() : [message.author];
+      image.forEach((user) => {
+        const embed = new Discord.RichEmbed()
+          .setColor(0xFF8001)
+          .setDescription(`**[${user.tag}](${user.avatarURL})**`)
+          .setImage(user.avatarURL)
+          .setFooter("̷̧̟̭̺͕̜̦̔̏̊̍ͧ͊́̚̕͞" , footerPicture)
+          .setTimestamp();
+        embeds.unshift(embed);
+      });
+      resolve(embeds);
+    })
+  },
+  authoriseExecuter: (userID) => {
+    return userID === config.ownerID;
   }
 }

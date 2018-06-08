@@ -2,10 +2,11 @@
 const helper = require("./HelperFunctions");
 
 // Personal modules
-const cryptoEmbed = require("./crypto/SendEmbed");
+const cryptoEmbed = require("./crypto/CryptoEmbed");
 const getWeather = require("./weather/GetWeather");
 
 // Constants
+const config = require("./config.json")
 const coinsSymbolID = require("./crypto/AllCoins.json").data;
 const footerPicture = "https://cdn.discordapp.com/avatars/451174485933031447/1cfb9e63d3293959ce59ab04c2367396.jpg?size=256";
 const coinMap = new Map();
@@ -27,9 +28,10 @@ module.exports = {
       message.channel.send("Incorrect usage. No-one to greet was mentioned, try again.");
     }
   },
-  weather: (message, args) => {
+  weather: async (message, args, footerPicture) => {
     console.log([args.join(" ")]);
-    getWeather.getWeather(message, args.join(" "));
+    const currentEmbed = await getWeather.getWeather(message, args.join(" "), footerPicture);
+    message.channel.send(currentEmbed);
   },
   coin: (message, args) => {
     if (args.length > 3) {
@@ -43,9 +45,36 @@ module.exports = {
       })
     }
   },
-  avatar: (message, args) => {
-    console.log(args);
-    const embed = helper.createAvatarEmbed(message, args, footerPicture);
-    message.channel.send(embed);
+  avatar: async (message, args) => {
+    const embeds = await helper.createAvatarEmbed(message, args, footerPicture);
+    embeds.forEach((embed) => {
+      message.channel.send(embed);
+    });
+  },
+  silence: (message) => {
+    if (!helper.authoriseExecuter(message.author.id)) { return; }
+    message.delete();
+    const silencedUser = message.mentions.members.first();
+    const silencedRoleID = message.guild.roles.find("name", "silenced").id;
+    if (!silencedUser.roles.has(silencedRoleID)) {
+      silencedUser.addRole(silencedRoleID)
+      .catch(console.error);
+    } else {
+      silencedUser.removeRole(silencedRoleID)
+      .catch(console.error);
+    }
+  },
+  mute: (message) => {
+    if (!helper.authoriseExecuter(message.author.id)) { return; }
+    message.delete();
+    const muteUser = message.mentions.members.first();
+    muteUser.setMute(!muteUser.serverMute)
+    .catch(console.error);
+  },
+  deafen: (message) => {
+    if (!helper.authoriseExecuter(message.author.id)) { return; }
+    message.delete();
+    const deafenedUser = message.mentions.members.first();
+    deafenedUser.setDeaf(!deafenedUser.deaf);
   }
 }
