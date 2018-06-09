@@ -1,9 +1,9 @@
 // Node modules
-const helper = require("./HelperFunctions");
+const HelperFunctions = require("./HelperFunctions");
 
 // Personal modules
-const cryptoEmbed = require("./crypto/CryptoEmbed");
-const getWeather = require("./weather/GetWeather");
+const CryptoEmbed = require("./crypto/CryptoEmbed");
+const WeatherEmbed = require("./weather/GetWeather");
 
 // Constants
 const coinsSymbolID = require("./crypto/AllCoins.json").data;
@@ -16,8 +16,9 @@ coinsSymbolID.forEach((coinJSON) => {
 
 module.exports = {
   weather: async (message, args) => {
-    const embed = await getWeather.getWeather(message, args.join(" "));
-    message.channel.send(embed);
+    WeatherEmbed.getWeather(message, args.join(" "))
+      .then((embed) => { message.channel.send(embed); })
+      .catch((error) => { console.log(error); });
   },
   coin: (message, args) => {
     if (args.length > 3) {
@@ -26,19 +27,28 @@ module.exports = {
       message.channel.send("No queries given.");
     } else {
       args.forEach(async (arg) => {
-        const currentEmbed = await cryptoEmbed.sendEmbed(message, arg, coinMap, footerPicture);
-        message.channel.send(currentEmbed);
+        CryptoEmbed.sendEmbed(message, arg, coinMap, footerPicture)
+          .then(embed => message.channel.send(embed))
+          .catch(error => console.log(error));
       })
     }
   },
   avatar: async (message, args) => {
-    const embeds = await helper.createAvatarEmbed(message, args, footerPicture);
-    embeds.forEach((embed) => {
-      message.channel.send(embed);
-    });
+    if (message.mentions.users.array().length > 3) {
+      message.channel.send("Too many queries, limit of 3.");
+      message.delete(5000);
+      return;
+    }
+    HelperFunctions.createAvatarEmbed(message, args, footerPicture)
+      .then((embeds) => {
+        embeds.forEach((embed) => {
+          message.channel.send(embed); 
+        });
+      })
+      .catch((error) => { console.log(error); });
   },
   silence: (message) => {
-    if (!helper.authoriseExecuter(message.author.id)) { return; }
+    if (!HelperFunctions.authoriseExecuter(message.author.id)) { return; }
     message.delete();
     const silencedUser = message.mentions.members.first();
     const silencedRoleID = message.guild.roles.find("name", "silenced").id;
@@ -51,14 +61,14 @@ module.exports = {
     }
   },
   mute: (message) => {
-    if (!helper.authoriseExecuter(message.author.id)) { return; }
+    if (!HelperFunctions.authoriseExecuter(message.author.id)) { return; }
     message.delete();
     const muteUser = message.mentions.members.first();
     muteUser.setMute(!muteUser.serverMute)
     .catch(console.error);
   },
   deafen: (message) => {
-    if (!helper.authoriseExecuter(message.author.id)) { return; }
+    if (!HelperFunctions.authoriseExecuter(message.author.id)) { return; }
     message.delete();
     const deafenedUser = message.mentions.members.first();
     deafenedUser.setDeaf(!deafenedUser.deaf);

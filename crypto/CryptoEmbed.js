@@ -1,6 +1,6 @@
 const fetch = require("node-fetch");
 const Discord = require("discord.js");
-const helper = require("../HelperFunctions.js");
+const HelperFunctions = require("../HelperFunctions.js");
 const Coin = require("./Coin.js");
 
 module.exports = {
@@ -20,9 +20,9 @@ module.exports = {
       // if (coinPrices.market_cap !== null) {
       //   marketCap = helper.intersectCommas(coinPrices.market_cap.toString());
       // }
-      const marketCap = helper.intersectCommas(coinPrices.market_cap.toString());
-      const dailyVolume = helper.intersectCommas(coinPrices.volume_24h.toString());
-      const supply = helper.intersectCommas(coinInfo.circulating_supply.toString());
+      const marketCap = HelperFunctions.intersectCommas(coinPrices.market_cap.toString());
+      const dailyVolume = HelperFunctions.intersectCommas(coinPrices.volume_24h.toString());
+      const supply = HelperFunctions.intersectCommas(coinInfo.circulating_supply.toString());
 
       const currentCoin = new Coin(coinInfo.name, coinInfo.symbol, coinInfo.rank, coinPrices.price,
         [coinPrices.percent_change_1h.toFixed(2), coinPrices.percent_change_24h.toFixed(2), coinPrices.percent_change_7d.toFixed(2)]);

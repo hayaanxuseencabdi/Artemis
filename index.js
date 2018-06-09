@@ -11,7 +11,7 @@ client.on("ready", function () {
 });
 
 client.on("message", function (message) {
-  if (message.content.startsWith(prefix) && message.channel.id !== config.welcome_channelID) {
+  if (message.content.startsWith(prefix) && config.blockedChannelIDs !== message.channel.id) {
     const args = message.content.slice(prefix.length).trim().split(/ +/g);
     const currentCommand = args.shift().toLowerCase();
     switch (currentCommand) {
@@ -28,9 +28,11 @@ client.on("message", function (message) {
         commands.avatar(message, args);
         break;
       case "kick":
+        message.delete(1000);
         message.mentions.members.first().kick();
         break;
       case "ban":
+        message.delete(1000);
         message.mentions.members.first().ban();
         break;
       case "silence":
