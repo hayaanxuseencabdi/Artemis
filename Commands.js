@@ -17,8 +17,8 @@ coinsSymbolID.forEach((coinJSON) => {
 module.exports = {
   weather: async (message, args) => {
     WeatherEmbed.getWeather(message, args.join(" "))
-      .then((embed) => { message.channel.send(embed); })
-      .catch((error) => { console.log(error); });
+      .then(embed =>  message.channel.send(embed))
+      .catch(error =>  console.log(error));
   },
   coin: (message, args) => {
     if (args.length > 3) {
@@ -33,6 +33,9 @@ module.exports = {
       })
     }
   },
+  tex: (message, args) => {
+    
+  },
   avatar: async (message, args) => {
     if (message.mentions.users.array().length > 3) {
       message.channel.send("Too many queries, limit of 3.");
@@ -45,7 +48,7 @@ module.exports = {
           message.channel.send(embed); 
         });
       })
-      .catch((error) => { console.log(error); });
+      .catch(error => console.log(error));
   },
   silence: (message) => {
     if (!HelperFunctions.authoriseExecuter(message.author.id)) { return; }
