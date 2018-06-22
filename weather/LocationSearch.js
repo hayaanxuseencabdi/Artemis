@@ -11,8 +11,9 @@ module.exports = {
         if (infoJSON.status !== "OK") {
           message.reply("refrain from using any special characters.")
             .then((msg) => {
-              message.delete();
-              msg.delete(3000);
+              /* @TODO: lllllllllllllllllllllllllllwhich line is useful?? */
+              // message.delete();
+              // msg.delete(3000);
             })
             .catch((err) => {
               console.error(err);

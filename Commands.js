@@ -6,13 +6,7 @@ const CryptoEmbed = require("./crypto/CryptoEmbed");
 const WeatherEmbed = require("./weather/GetWeather");
 
 // Constants
-const coinsSymbolID = require("./crypto/AllCoins.json").data;
 const footerPicture = "https://cdn.discordapp.com/avatars/451174485933031447/1cfb9e63d3293959ce59ab04c2367396.jpg?size=256";
-const coinMap = new Map();
-
-coinsSymbolID.forEach((coinJSON) => {
-  coinMap.set(coinJSON.symbol, coinJSON.id)
-});
 
 module.exports = {
   weather: async (message, args) => {
@@ -20,7 +14,7 @@ module.exports = {
       .then(embed =>  message.channel.send(embed))
       .catch(error =>  console.log(error));
   },
-  coin: (message, args) => {
+  coin: (message, coinMap, args) => {
     if (args.length > 3) {
       message.channel.send("Too many queries, limit of 3.");
     } else if (!args.length) {

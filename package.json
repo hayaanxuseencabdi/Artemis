@@ -1,20 +1,21 @@
 {
   "name": "artemis",
   "version": "1.0.0",
-  "description": "",
+  "description": "Discord bot [discord.js library] with various features",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node ."
+    "start": "wget -O crypto/AllCoins.json https://api.coinmarketcap.com/v2/listings/ && node ."
   },
   "keywords": [],
-  "author": "",
+  "author": "hxyxxn",
   "license": "ISC",
   "dependencies": {
     "discord.js": "^11.3.2",
     "dotenv": "^5.0.1",
     "ffmpeg-binaries": "^3.2.2-3",
     "mathjax-node": "^2.1.1",
+    "mathjax-node-svg2png": "^2.0.0",
     "node-fetch": "^2.1.2",
     "node-opus": "^0.3.0",
     "request": "^2.87.0"

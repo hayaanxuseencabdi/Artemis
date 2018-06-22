@@ -6,11 +6,18 @@ const prefix = config.prefix;
 // Functions to perform certain commands
 const commands = require("./Commands");
 
-client.on("ready", function () {
+// Current CoinMarketCap cryptocurrency listings
+const coinsSymbolID = require("./crypto/AllCoins.json").data;
+const coinMap = new Map();
+coinsSymbolID.forEach((coinJSON) => {
+  coinMap.set(coinJSON.symbol, coinJSON.id)
+});
+
+client.on("ready", () => {
   console.log("Online");
 });
 
-client.on("message", function (message) {
+client.on("message", (message) => {
   if (message.content.startsWith(prefix) && config.blockedChannelIDs !== message.channel.id) {
     const args = message.content.slice(prefix.length).trim().split(/ +/g);
     const currentCommand = args.shift().toLowerCase();
@@ -22,7 +29,7 @@ client.on("message", function (message) {
         commands.weather(message, args);
         break;
       case "coin":
-        commands.coin(message, args);
+        commands.coin(message, coinMap, args);
         break;
       case "avatar":
         commands.avatar(message, args);
