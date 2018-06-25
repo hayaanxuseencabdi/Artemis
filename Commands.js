@@ -4,6 +4,7 @@ const HelperFunctions = require("./HelperFunctions");
 // Personal modules
 const CryptoEmbed = require("./crypto/CryptoEmbed");
 const WeatherEmbed = require("./weather/GetWeather");
+const TeX = require("./tex/GetTeX");
 
 // Constants
 const footerPicture = "https://cdn.discordapp.com/avatars/451174485933031447/1cfb9e63d3293959ce59ab04c2367396.jpg?size=256";
@@ -28,7 +29,7 @@ module.exports = {
     }
   },
   tex: (message, args) => {
-    
+    TeX.getTeX(message, args.join(""));
   },
   avatar: async (message, args) => {
     if (message.mentions.users.array().length > 3) {

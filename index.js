@@ -31,6 +31,9 @@ client.on("message", (message) => {
       case "coin":
         commands.coin(message, coinMap, args);
         break;
+      case "tex":
+        commands.tex(message, args);
+        break;
       case "avatar":
         commands.avatar(message, args);
         break;
