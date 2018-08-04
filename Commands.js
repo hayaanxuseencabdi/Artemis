@@ -2,27 +2,32 @@
 const HelperFunctions = require("./HelperFunctions");
 
 // Personal modules
-const CryptoEmbed = require("./crypto/CryptoEmbed");
-const WeatherEmbed = require("./weather/GetWeather");
+const Crypto = require("./crypto/CryptoEmbed");
+const Weather = require("./weather/GetWeather");
 const TeX = require("./tex/GetTeX");
 
 // Constants
 const footerPicture = "https://cdn.discordapp.com/avatars/451174485933031447/1cfb9e63d3293959ce59ab04c2367396.jpg?size=256";
 
 module.exports = {
-  weather: async (message, args) => {
-    WeatherEmbed.getWeather(message, args.join(" "))
-      .then(embed =>  message.channel.send(embed))
-      .catch(error =>  console.log(error));
+  weather: (message, args) => {
+    Weather.getWeather(message, args.join(" "))
+      .then(embed => message.channel.send(embed))
+      .catch(error => console.log(error));
   },
   coin: (message, coinMap, args) => {
     if (args.length > 3) {
       message.channel.send("Too many queries, limit of 3.");
     } else if (!args.length) {
-      message.channel.send("No queries given.");
+      message.channel.send("Received no queries.")
+        .then((msg) => {
+          msg.delete(3000);
+          message.delete();
+        })
+        .catch(err => console.error(err));
     } else {
-      args.forEach(async (arg) => {
-        CryptoEmbed.sendEmbed(message, arg, coinMap, footerPicture)
+      args.forEach((arg) => {
+        Crypto.embed(message, arg, coinMap, footerPicture)
           .then(embed => message.channel.send(embed))
           .catch(error => console.log(error));
       })
@@ -31,7 +36,7 @@ module.exports = {
   tex: (message, args) => {
     TeX.getTeX(message, args.join(""));
   },
-  avatar: async (message, args) => {
+  avatar: (message, args) => {
     if (message.mentions.users.array().length > 3) {
       message.channel.send("Too many queries, limit of 3.");
       message.delete(5000);

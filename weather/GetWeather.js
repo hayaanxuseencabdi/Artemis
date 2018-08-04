@@ -14,7 +14,7 @@ module.exports = {
         const currentWeather = new Weather(currentLocation.formattedAddress, HelperFunctions.capitalise(info.weather[0].description),
           info.main.temp, info.main.humidity, info.wind.speed,
           info.clouds.all, info.weather[0].icon);
-        return WeatherEmbed.sendEmbed(currentLocation, currentWeather, info.weather[0].icon[2]);
+        return WeatherEmbed.embed(currentLocation, currentWeather, info.weather[0].icon[2]);
       })
       .catch((error) => {
         console.log(`getWeather error: ${error}`);
