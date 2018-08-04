@@ -1,7 +1,7 @@
 const Discord = require("discord.js");
 
 module.exports = {
-  sendEmbed: (currentLocation, currentWeather, dayNightChar) => {
+  embed: (currentLocation, currentWeather, dayNightChar) => {
     const weatherEmbed = new Discord.RichEmbed()
       .setDescription(currentLocation.toString())
       .setColor((dayNightChar == 'd') ? 0xF4E542 : 0x000000)
