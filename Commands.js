@@ -51,7 +51,7 @@ module.exports = {
       .catch(error => console.log(error));
   },
   silence: (message) => {
-    if (!HelperFunctions.authoriseExecuter(message.author.id)) { return; }
+    if (!HelperFunctions.authoriseExecuter(message)) { return; }
     message.delete();
     const silencedUser = message.mentions.members.first();
     const silencedRoleID = message.guild.roles.find("name", "silenced").id;
@@ -64,14 +64,14 @@ module.exports = {
     }
   },
   mute: (message) => {
-    if (!HelperFunctions.authoriseExecuter(message.author.id)) { return; }
+    if (!HelperFunctions.authoriseExecuter(message)) { return; }
     message.delete();
     const muteUser = message.mentions.members.first();
     muteUser.setMute(!muteUser.serverMute)
     .catch(console.error);
   },
   deafen: (message) => {
-    if (!HelperFunctions.authoriseExecuter(message.author.id)) { return; }
+    if (!HelperFunctions.authoriseExecuter(message)) { return; }
     message.delete();
     const deafenedUser = message.mentions.members.first();
     deafenedUser.setDeaf(!deafenedUser.deaf);

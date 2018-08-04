@@ -32,8 +32,8 @@ module.exports = {
       resolve(embeds);
     })
   },
-  authoriseExecuter: (userID) => {
-    return userID === config.ownerID;
+  authoriseExecuter: (msg) => {
+    return msg.author.id === msg.guild.ownerID;
   },
   capitalise: (word) => {
     return word[0].toUpperCase() + word.slice(1);
