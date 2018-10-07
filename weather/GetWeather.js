@@ -5,8 +5,8 @@ const HelperFunctions = require("../HelperFunctions");
 const WeatherEmbed = require("./WeatherEmbed");
 
 module.exports = {
-  getWeather: async (message, args) => {
-    let currentLocation = await LocationSearch.returnCoordinates(message, args);
+  getWeather: async (args) => {
+    let currentLocation = await LocationSearch.returnCoordinates(args);
     if (currentLocation === undefined) { return; }
     return fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${currentLocation.latitude}&lon=${currentLocation.longitude}&appid=${process.env.OPENWEATHERMAP}`)
       .then((unparsedJSON) => unparsedJSON.json())

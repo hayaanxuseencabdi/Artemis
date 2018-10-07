@@ -2,10 +2,15 @@ const fetch = require("node-fetch");
 const HelperFunctions = require("../HelperFunctions");
 const Location = require("./Location");
 
+const BASE_URL = "https://maps.googleapis.com/maps/api/geocode/json?address="
 
 module.exports = {
-  returnCoordinates: (message, query) => {
-    return fetch(encodeURI(`https://maps.googleapis.com/maps/api/geocode/json?address=${HelperFunctions.transformToQuery(query)}&key=${process.env.GEOCODING}`))
+  returnCoordinates: (query) => {
+    return fetch(
+      encodeURI(
+      `${BASE_URL}${HelperFunctions.transformToQuery(query)}&key=${process.env.GEOCODING}`
+      )
+    )
       .then((info) => info.json())
       .then((infoJSON) => {
         const info = infoJSON.results[0].address_components;
