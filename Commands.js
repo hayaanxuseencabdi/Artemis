@@ -11,7 +11,7 @@ const footerPicture = "https://cdn.discordapp.com/avatars/451174485933031447/1cf
 
 module.exports = {
   weather: (message, args) => {
-    Weather.getWeather(message, args.join(" "))
+    Weather.getWeather(args.join(" "))
       .then(embed => message.channel.send(embed))
       .catch(error => console.log(error));
   },
@@ -34,7 +34,9 @@ module.exports = {
     }
   },
   tex: (message, args) => {
-    TeX.getTeX(message, args.join(""));
+    message.channel.send(args);
+    TeX.getTeX(message, args.join(' '));
+    console.log(args);
   },
   avatar: (message, args) => {
     if (message.mentions.users.array().length > 3) {

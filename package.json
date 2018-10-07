@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "wget -O crypto/AllCoins.json https://api.coinmarketcap.com/v2/listings/ && node ."
+    "start": "wget -O crypto/AllCoins.json https://api.coinmarketcap.com/v2/listings/ 2> /dev/null && node ."
   },
   "keywords": [],
   "author": "hxyxxn",

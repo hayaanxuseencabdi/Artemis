@@ -1,14 +1,28 @@
-const fs = require ("fs");
-const http = require ("http");
+const request = require("request");
+
+const BASE_URL = "http://rtex.probablyaweb.site/api/v2"
 
 module.exports = {
-  getTeX: (message, args) => {
-    const file = fs.createWriteStream("./tex/tex.png");
-    message.channel.send(encodeURI(`http://latex.codecogs.com/png.latex?\\dpi{120}\\bg_white&space;${args}`));
-    const request = http.get(encodeURI(`http://latex.codecogs.com/png.latex?\\dpi{120}\\bg_white&space;${args}`),
-      (response) => {
-        response.pipe(file);
-        message.channel.send("" , { files: ["./tex/tex.png"] });
+  getTeX: (message, texQuery) => {
+    const options = {
+      method: 'POST',
+      body: {
+        'code': `\begin{document} ${texQuery.replace()} \end{document}`,
+        'format': 'png'
+      },
+      json: true,
+      url: BASE_URL,
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+
+    request(options, (err, res, body) => {
+      if (err) {
+        console.log('Error :', err)
+        return
+      }
+      console.log('Body :', body)
     });
   }
 }
